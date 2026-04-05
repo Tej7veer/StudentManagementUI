@@ -9,7 +9,8 @@ import { CreateStudent } from '../student.model';
   selector: 'app-student-form',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './student-form.component.html'
+  templateUrl: './student-form.component.html',
+  styleUrl: './student-form.css'
 })
 export class StudentFormComponent implements OnInit {
   isEdit = false;

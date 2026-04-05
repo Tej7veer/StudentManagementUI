@@ -9,7 +9,8 @@ import { AuthService } from '../../auth/auth.service';
   selector: 'app-student-list',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './student-list.component.html'
+  templateUrl: './student-list.component.html',
+  styleUrl: './student-list.css'
 })
 export class StudentListComponent implements OnInit {
   students: Student[] = [];
