@@ -1,0 +1,19 @@
+<nav class="navbar" *ngIf="isLoggedIn">
+  <div class="nav-brand">
+    <span class="nav-icon">📚</span>
+    <span class="nav-title">Student Management</span>
+  </div>
+
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/students" routerLinkActive="active">
+        🎓 Students
+      </a>
+    </li>
+  </ul>
+
+  <div class="nav-right">
+    <span class="nav-user">👤 admin</span>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+</nav>

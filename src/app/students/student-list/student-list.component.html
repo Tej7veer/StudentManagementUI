@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h1>Students</h1>
+  <button class="btn-primary" (click)="onAdd()">+ Add Student</button>
+</div>
+
+<div *ngIf="loading" class="loading">Loading...</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+<div *ngIf="!loading" class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Course</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of students">
+        <td>{{ s.id }}</td>
+        <td>{{ s.name }}</td>
+        <td>{{ s.email }}</td>
+        <td>{{ s.age }}</td>
+        <td><span class="badge">{{ s.course }}</span></td>
+        <td>{{ s.createdDate | date:'dd MMM yyyy' }}</td>
+        <td>
+          <button class="btn-edit" (click)="onEdit(s.id)">Edit</button>
+          <button class="btn-delete" (click)="onDelete(s.id)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="students.length === 0">
+        <td colspan="7" class="empty">No students found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
