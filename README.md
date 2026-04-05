@@ -1,59 +1,58 @@
-# StudentManagementUi
+# Student Management UI — Angular 17
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+Frontend for the Student Management System built with Angular 17 (Standalone Components).
 
-## Development server
+## Tech Stack
+- Angular 17 (Standalone)
+- TypeScript
+- JWT Authentication (HTTP Interceptor)
+- Route Guards
 
-To start a local development server, run:
+## Prerequisites
+- Node.js v18+
+- Angular CLI: `npm install -g @angular/cli`
+- API running at `https://localhost:5001`
 
+## Setup Steps
+
+1. Clone the repo:
 ```bash
-ng serve
+   git clone https://github.com/Tej7veer/StudentManagementUI.git
+   cd StudentManagementUI
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+2. Install dependencies:
 ```bash
-ng generate component component-name
+   npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+3. Update the API URL in `src/environments/environment.ts`:
+```typescript
+   export const environment = {
+     production: false,
+     apiUrl: 'https://localhost:5001/api'
+   };
 ```
 
-## Building
-
-To build the project run:
-
+4. Run the app:
 ```bash
-ng build
+   ng serve
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+5. Open browser: `http://localhost:4200`
 
-## Running unit tests
+## Login Credentials
+- **Username:** admin
+- **Password:** admin123
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Features
+- Login page with JWT token storage
+- View all students in a table
+- Add new student
+- Edit existing student
+- Delete student
+- Auth guard — redirects to login if not authenticated
+- HTTP interceptor — auto-attaches Bearer token to all requests
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## API Repo
+https://github.com/Tej7veer/StudentManagementSystem
