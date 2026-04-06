@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Student } from '../student.model';
@@ -20,7 +20,8 @@ export class StudentListComponent implements OnInit {
   constructor(
     private studentService: StudentService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef   // ← add this
   ) {}
 
   ngOnInit() {
@@ -29,9 +30,18 @@ export class StudentListComponent implements OnInit {
 
   loadStudents() {
     this.loading = true;
+    this.error = '';
     this.studentService.getAll().subscribe({
-      next: (data) => { this.students = data; this.loading = false; },
-      error: () => { this.error = 'Failed to load students'; this.loading = false; }
+      next: (data) => {
+        this.students = data;
+        this.loading = false;
+        this.cdr.detectChanges();    // ← force UI update
+      },
+      error: () => {
+        this.error = 'Failed to load students';
+        this.loading = false;
+        this.cdr.detectChanges();    // ← force UI update
+      }
     });
   }
 
@@ -42,7 +52,9 @@ export class StudentListComponent implements OnInit {
   onDelete(id: number) {
     if (!confirm('Delete this student?')) return;
     this.studentService.delete(id).subscribe({
-      next: () => this.loadStudents(),
+      next: () => {
+        this.loadStudents();         // ← reloads and cdr fires inside
+      },
       error: () => alert('Delete failed')
     });
   }

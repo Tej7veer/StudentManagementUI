@@ -6,7 +6,7 @@
 <div *ngIf="loading" class="loading">Loading...</div>
 <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
-<div *ngIf="!loading" class="table-wrapper">
+<div *ngIf="!loading && !error" class="table-wrapper">
   <table>
     <thead>
       <tr>

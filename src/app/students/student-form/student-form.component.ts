@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,6 +16,7 @@ export class StudentFormComponent implements OnInit {
   isEdit = false;
   studentId = 0;
   loading = false;
+  fetchingStudent = false;
   error = '';
 
   form: CreateStudent = { name: '', email: '', age: 0, course: '' };
@@ -23,7 +24,8 @@ export class StudentFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private cdr: ChangeDetectorRef   // ← inject this
   ) {}
 
   ngOnInit() {
@@ -31,11 +33,24 @@ export class StudentFormComponent implements OnInit {
     if (id) {
       this.isEdit = true;
       this.studentId = +id;
+      this.fetchingStudent = true;
       this.studentService.getById(this.studentId).subscribe({
         next: (s) => {
-          this.form = { name: s.name, email: s.email, age: s.age, course: s.course };
+          this.form = {
+            name: s.name,
+            email: s.email,
+            age: s.age,
+            course: s.course
+          };
+          this.fetchingStudent = false;
+          this.cdr.detectChanges();   // ← force UI update
         },
-        error: () => this.error = 'Failed to load student'
+        error: (err) => {
+          console.error(err);
+          this.error = 'Failed to load student';
+          this.fetchingStudent = false;
+          this.cdr.detectChanges();   // ← force UI update
+        }
       });
     }
   }
@@ -48,7 +63,11 @@ export class StudentFormComponent implements OnInit {
 
     request.subscribe({
       next: () => this.router.navigate(['/students']),
-      error: () => { this.error = 'Save failed. Please try again.'; this.loading = false; }
+      error: () => {
+        this.error = 'Save failed. Please try again.';
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
